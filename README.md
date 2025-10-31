@@ -14,7 +14,7 @@ A dead simple Python client for [classifai.dev](https://classifai.dev) - a self-
 ## Installation
 
 ```bash
-pip install classifai
+pip install classifai-sdk
 ```
 
 ## Quick Start

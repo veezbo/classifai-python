@@ -1,6 +1,6 @@
 # Publishing to PyPI
 
-This guide covers how to publish the classifai Python package to PyPI.
+This guide covers how to publish the ClassifAI Python package to PyPI.
 
 ## Prerequisites
 
@@ -27,8 +27,8 @@ python -m build
 ```
 
 This creates:
-- `dist/classifai-0.1.0.tar.gz` (source distribution)
-- `dist/classifai-0.1.0-py3-none-any.whl` (wheel distribution)
+- `dist/classifai-sdk-0.1.0.tar.gz` (source distribution)
+- `dist/classifai-sdk-0.1.0-py3-none-any.whl` (wheel distribution)
 
 ### 3. Test on TestPyPI (Recommended)
 
@@ -42,7 +42,7 @@ Enter your TestPyPI credentials when prompted.
 
 Test the installation:
 ```bash
-pip install --index-url https://test.pypi.org/simple/ classifai
+pip install --index-url https://test.pypi.org/simple/ classifai-sdk
 ```
 
 ### 4. Publish to PyPI
@@ -58,7 +58,7 @@ Enter your PyPI credentials.
 ### 5. Verify Installation
 
 ```bash
-pip install classifai
+pip install classifai-sdk
 ```
 
 Test it:
@@ -142,7 +142,7 @@ Follow [Semantic Versioning](https://semver.org/):
 - [ ] Test on TestPyPI first
 - [ ] Upload to PyPI: `python -m twine upload dist/*`
 - [ ] Create GitHub release/tag
-- [ ] Verify installation: `pip install classifai`
+- [ ] Verify installation: `pip install classifai-sdk`
 - [ ] Update documentation if needed
 
 ## Troubleshooting
