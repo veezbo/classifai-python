@@ -1,6 +1,6 @@
 # Publishing to PyPI
 
-This guide covers how to publish the classifai-sdk Python package to PyPI.
+This guide covers how to publish the ClassifAI Python package to PyPI.
 
 ## Prerequisites
 
