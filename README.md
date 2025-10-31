@@ -1,6 +1,6 @@
 # ClassifAI Python Client
 
-A dead simple Python client for the [ClassifAI API](https://classifai.dev) - a self-improving classification API for text and images.
+A dead simple Python client for [classifai.dev](https://classifai.dev) - a self-improving, multimodal classification API for developers and AI agents.
 
 ## Features
 
@@ -22,8 +22,8 @@ pip install classifai
 ```python
 from classifai import ClassifAI
 
-# Initialize client (use API key for higher rate limits)
-client = ClassifAI(api_key="your_api_key")  # or ClassifAI() for anonymous access
+# Initialize client
+client = ClassifAI(api_key="your_api_key")
 
 # Classify text
 result = client.classify(
@@ -64,14 +64,14 @@ result = client.classify(
 
 ```python
 # Classify from local file
-result = client.classify_from_files(
-    content=["photo.jpg"],
+result = client.classify(
+    content="photo.jpg",
     labels=["cat", "dog", "bird", "other"]
 )
 
 # Classify from URL
-result = client.classify_from_files(
-    content=["https://example.com/image.jpg"],
+result = client.classify(
+    content="https://example.com/image.jpg",
     labels=["cat", "dog", "bird", "other"]
 )
 ```
@@ -82,7 +82,7 @@ The real power of ClassifAI is analyzing text and images together:
 
 ```python
 # Support ticket routing with screenshot
-result = client.classify_from_files(
+result = client.classify(
     content=[
         "Customer reported: Cannot complete checkout",
         "screenshot.jpg"
@@ -91,7 +91,7 @@ result = client.classify_from_files(
 )
 
 # Product review with multiple images
-result = client.classify_from_files(
+result = client.classify(
     content=[
         "Before treatment:",
         "before.jpg",
@@ -103,7 +103,7 @@ result = client.classify_from_files(
 )
 
 # Social media moderation
-result = client.classify_from_files(
+result = client.classify(
     content=[
         "Check out this offer!",
         "https://example.com/promo.jpg"
@@ -206,37 +206,31 @@ except ValidationError as e:
 
 ## API Reference
 
-### ClassifAI(api_key=None, base_url="https://api.classifai.dev")
+### ClassifAI(api_key, base_url="https://api.classifai.dev")
 
 Initialize the client.
 
 **Parameters:**
-- `api_key` (str, optional): API key for authentication. Without it, you'll use anonymous access with global rate limits.
+- `api_key` (str): API key for authentication. Get yours at [classifai.dev](https://classifai.dev). (Optional: can be omitted for anonymous access with global rate limits)
 - `base_url` (str): Base URL for the API
 
 ### classify(content, labels=None, description=None, project_id=None)
 
-Classify content items.
+Classify text, images from files/URLs, or a mix of both.
+
+Automatically detects and handles:
+- Plain text strings
+- Local file paths (reads and encodes images)
+- URLs starting with http:// or https:// (downloads and encodes)
+- Pre-formatted dicts with 'type' and 'content' keys
 
 **Parameters:**
-- `content` (str | list[str] | list[dict]): Content to classify
+- `content` (str | list[str | Path] | list[dict]): Content to classify - can be text, file paths, URLs, or a mix
 - `labels` (list[str], optional): Explicit labels (2-50 labels)
 - `description` (str, optional): Description for automatic label inference
 - `project_id` (str, optional): Project ID for reusing labels
 
 **Returns:** dict with `label`, `labels`, `detection_id`, `project_id`, etc.
-
-### classify_from_files(content, labels=None, description=None, project_id=None)
-
-Classify with automatic file and URL handling.
-
-**Parameters:**
-- `content` (list[str | Path]): Mix of text, file paths, and image URLs
-- `labels` (list[str], optional): Labels for classification
-- `description` (str, optional): Description for label inference
-- `project_id` (str, optional): Project ID
-
-**Returns:** dict with classification results
 
 ### submit_feedback(detection_id, ground_truth)
 
@@ -259,12 +253,13 @@ Get project statistics.
 
 ## Rate Limits
 
-| Tier | API Key | Rate Limits | Size Limit |
-|------|---------|-------------|------------|
-| Anonymous | ❌ No | 10/min, 100/day (global) | 500 KB |
-| Free | ✅ Yes | 10/min, 100/day | 500 KB |
-| Hobby | ✅ Yes | 10/min, 1,000/day | 2.5 MB |
-| Production | ✅ Yes | 100/min, 10,000/day | 10 MB |
+| Tier | Rate Limits | Size Limit |
+|------|-------------|------------|
+| Free | 10/min, 100/day | 500 KB |
+| Hobby | 10/min, 1,000/day | 2.5 MB |
+| Production | 100/min, 10,000/day | 10 MB |
+
+Get your API key at [classifai.dev](https://classifai.dev)
 
 ## Contributing
 
@@ -279,4 +274,4 @@ MIT License - see LICENSE file for details.
 - **Website:** https://classifai.dev
 - **Documentation:** https://classifai.dev/docs
 - **API Docs:** https://api.classifai.dev/docs
-- **GitHub:** https://github.com/classifai/classifai-python
+- **GitHub:** https://github.com/veezbo/classifai-python
